@@ -46,6 +46,7 @@ class ComparaFun():
 
         self.dfFun = pandas.read_excel(self.inputPath, sheet_name='公式')
         self.dfFun['验证'] = [0]*len(self.dfFun)
+        self.dfFun['分割结构'] = [0]*len(self.dfFun)
 
     def SplitFun(self, userInput, splitStr: str) -> list:
         '''SplitFun用于将输入的字符串基于分隔符拆解，并输出一个保留了分隔符的列表'''
@@ -87,12 +88,13 @@ class ComparaFun():
         for i in range(len(userInput)):
             if userInput[i].startswith('$'):
                 userInput[i] = self.dfPara[userInput[i]]
-        return ''.join(userInput)
+        return [''.join(userInput),str(userInput)]
 
     def run(self):
         for i in range(len(self.dfFun)):
-            self.dfFun.iloc[i, 2] = self.main(self.dfFun.iloc[i, 0])
-        self.dfFun.to_excel(self.outputPath + r'\输出结果.xlsx')
+            self.dfFun.iloc[i, 2] = self.main(self.dfFun.iloc[i, 0])[0]
+            self.dfFun.iloc[i, 3] = self.main(self.dfFun.iloc[i, 0])[1]
+        self.dfFun.to_excel(self.outputPath + r'\output.xlsx')
 
 # from pycomparafun import *
 # F = ComparaFun()
