@@ -53,6 +53,7 @@ class ComparaFun():
         try:
             if isinstance(userInput, str):
                 if userInput.find(splitStr) != -1:  # 如果字符串存在分隔符，则进行如下处理
+                    userInput.replace(' ', '')
                     tmpList = userInput.split(splitStr)  # 按分隔符分割得到的列表
                     for i in tmpList:
                         outList.append(i)  # 将分割后的元素一个一个写入结果表
@@ -92,3 +93,9 @@ class ComparaFun():
         for i in range(len(self.dfFun)):
             self.dfFun.iloc[i, 2] = self.main(self.dfFun.iloc[i, 0])
         self.dfFun.to_excel(self.outputPath + r'\输出结果.xlsx')
+
+# from pycomparafun import *
+# F = ComparaFun()
+# F.setInputFile = r"C:\Users\zhhon\Desktop\新建 Microsoft Excel 工作表.xlsx"
+# F.setOutputFile = r"C:\Users\zhhon\Desktop"
+# F.run()
